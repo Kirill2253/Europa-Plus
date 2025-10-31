@@ -11,10 +11,10 @@ public sealed partial class CoordinateDiskCentCommSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<CoordinateDiskCentCommComponent, ComponentInit>(OnCentCommDiskInit);
+        SubscribeLocalEvent<CoordinateDiskCentCommComponent, ComponentStartup>(OnCentCommDiskStartup);
     }
 
-    private void OnCentCommDiskInit(EntityUid uid, CoordinateDiskCentCommComponent component, ComponentInit args)
+    private void OnCentCommDiskStartup(EntityUid uid, CoordinateDiskCentCommComponent component, ComponentStartup args)
     {
         if (!TryComp(uid, out ShuttleDestinationCoordinatesComponent? comp))
             return;

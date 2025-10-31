@@ -75,16 +75,16 @@ public sealed partial class StationCentCommSystem : EntitySystem
                 EnsureComp<BlockSellingStationComponent>(uid);
             }
 
-            _map.InitializeMap(mapId);
-
             component.MapId = mapId;
 
             if (_station.GetStationInMap(mapId) is { } station)
                 component.StationEntity = station;
+
+            _map.InitializeMap(mapId);
         }
         else
         {
-            _sawmill.Warning("No Centcomm map found, skipping setup.");
+            _sawmill.Warning("No CentComm map found, skipping setup.");
         }
     }
 }
