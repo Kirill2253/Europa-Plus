@@ -18,6 +18,9 @@ heretic-ability-fail-tile-occupied = Целевая плитка занята!
 heretic-ability-fail-rust-stage-low = У вас недостаточно силы, чтобы заржаветь эту поверхность!
 heretic-ability-fail-target-ghoul = Цель уже является упырем!
 heretic-ability-fail-target-no-mind = Цель не имеет души!
+heretic-cosmic-rune-fail-star-mark = Заблокирована звездной меткой!
+heretic-cosmic-rune-fail-unlinked = Нет связанной руны!
+heretic-cosmic-rune-fail-range = Недостаточно близко!
 heretic-magicitem-examine = [color=yellow]Позволяет использовать продвинутые заклинания при удержании или экипировке.[/color]
 mansus-grasp-trigger-fail = Что-то мешает вам активировать это!
 
