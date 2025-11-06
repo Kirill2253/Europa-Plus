@@ -332,6 +332,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             _chatManager.EnsurePlayer(player.UserId).AddEntity(GetNetEntity(source));
         }
 
+        if (_annihilator.AnnihilateChudInIc(message, source))
+            return;
+
         if (desiredType == InGameICChatType.Speak && message.StartsWith(LocalPrefix))
         {
             checkRadioPrefix = false;
@@ -839,6 +842,9 @@ private string GetVoiceName(EntityUid source)
         if (message.Length == 0)
             return;
 
+        if (_annihilator.AnnihilateChudInIc(originalMessage, source))
+            return;
+
         GetSpeechVerb(source, message);
 
         string name;
@@ -933,6 +939,9 @@ private string GetVoiceName(EntityUid source)
         message = TransformSpeech(source, message, language); // Einstein Engines - Language
         // Goob edit end
         if (message.Length == 0)
+            return;
+
+        if (_annihilator.AnnihilateChudInIc(originalMessage, source))
             return;
 
         // get the entity's name by visual identity (if no override provided).
@@ -1152,11 +1161,6 @@ private string GetVoiceName(EntityUid source)
     private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true)
     {
         var trimmedMessage = message.Trim();
-        if (_annihilator.AnnihilateChudInIc(trimmedMessage, source))
-        {
-            emoteStr = null;
-            return "У меня аутизм.";
-        }
 
         var newMessage = SanitizeMessageReplaceWords(trimmedMessage);
 
@@ -1181,7 +1185,7 @@ private string GetVoiceName(EntityUid source)
     {
         var newMessage = message.Trim();
         if (_annihilator.AnnihilateChudInOoc(newMessage, session))
-            return "У меня аутизм";
+            return "У меня аутизм!";
 
         newMessage = FuckHelper.SanitizeSimpleMessageForChat(newMessage);
 

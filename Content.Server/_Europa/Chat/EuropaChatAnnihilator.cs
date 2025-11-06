@@ -31,7 +31,8 @@ public sealed class EuropaChatAnnihilator
         "raid",
         "дискорд",
         "http",
-        "gg",
+        " gg ",
+        ".gg",
         "корвакс",
         "корвукс",
         "корвах",
@@ -77,7 +78,6 @@ public sealed class EuropaChatAnnihilator
         "цербер",
         "cerber",
         "щиткур",
-        "работка",
         "читы",
         ":clown:",
         ":fish:",
@@ -86,11 +86,9 @@ public sealed class EuropaChatAnnihilator
         ":rotating_light:",
         "dscrd",
         "bind",
-        "земля плоская",
-        "плоская земля",
         "admin",
         "moder",
-        "host",
+        " host ",
         "хост",
         "nabeb",
         " рп ",
@@ -109,7 +107,7 @@ public sealed class EuropaChatAnnihilator
         "фэйл",
         "аккич",
         "ware",
-        "варе "
+        " варе "
     };
 
     private static readonly List<string> OocShit = new()
