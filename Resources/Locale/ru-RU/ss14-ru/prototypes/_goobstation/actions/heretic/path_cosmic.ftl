@@ -11,4 +11,4 @@ ent-ActionStarGaze = Звёздный Взгляд
 ent-ActionResetStarGazerConsciousness = Перезагрузить сознание Звёздочёта
     .desc = Заменяет разум вызванного вами призрака разумом другого призрака.
 ent-ActionStarGazerSeekMaster = Найти Мастера
-    .desc = Телепортирует тебя к вашему мастеру.
+    .desc = Телепортирует вас к вашему мастеру.
