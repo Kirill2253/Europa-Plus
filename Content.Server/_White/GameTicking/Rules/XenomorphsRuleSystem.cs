@@ -112,7 +112,7 @@ public sealed class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRuleComponen
         if (component.WinType != WinType.XenoMinor)
             return;
 
-        var centcomms = _emergencyShuttle.GetCentcommMaps();
+        var centcomms = _emergencyShuttle.GetTransitHubMaps();
         var station = GetStationGrids();
 
         var xenomorphs = GetAllXenomorphs();
@@ -240,6 +240,7 @@ public sealed class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRuleComponen
             component.RoundEndTextShuttleCall,
             component.RoundEndTextAnnouncement
         );
+        _audioSystem.PlayGlobal(component.XenomorphTakeoverSound, Filter.Broadcast(), true); // Goobstation - Play music on announcement
 
         component.WinType = WinType.XenoMinor;
         component.WinConditions.Add(WinCondition.XenoTakeoverStation);
@@ -294,7 +295,7 @@ public sealed class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRuleComponen
         var stationGrids = new HashSet<EntityUid>();
         foreach (var station in _gameTicker.GetSpawnableStations())
         {
-            if (TryComp<StationDataComponent>(station, out var data) && _station.GetLargestGrid(data) is { } grid)
+            if (TryComp<StationDataComponent>(station, out _) && _station.GetLargestGrid(station) is { } grid)
                 stationGrids.Add(grid);
         }
 

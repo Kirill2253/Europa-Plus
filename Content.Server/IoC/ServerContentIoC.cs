@@ -163,10 +163,12 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._Europa.Chat;
 using Content.Server._Europa.TTS;
 using Content.Server._Goobstation.Antag;
 using Content.Server._RMC14.LinkAccount; // RMC - Patreon
 using Content.Server.Administration;
+using Content.Server.Administration.Commands;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
@@ -183,7 +185,7 @@ using Content.Server.Mapping;
 using Content.Server.Maps;
 using Content.Server.MoMMI;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.Players.JobWhitelist;
+using Content.Server.Players.RoleWhitelist;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
@@ -237,7 +239,7 @@ namespace Content.Server.IoC
             IoCManager.Register<ServerDbEntryManager>();
             IoCManager.Register<ISharedPlaytimeManager, PlayTimeTrackingManager>();
             IoCManager.Register<ServerApi>();
-            IoCManager.Register<JobWhitelistManager>();
+            IoCManager.Register<RoleWhitelistManager>();
             IoCManager.Register<PlayerRateLimitManager>();
             IoCManager.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             IoCManager.Register<MappingManager>();
@@ -248,6 +250,8 @@ namespace Content.Server.IoC
             IoCManager.Register<LastRolledAntagManager>(); // Goobstation - antag pity
             IoCManager.Register<LinkAccountManager>(); // RMC - Patreon
             IoCManager.Register<TTSManager>(); // TTS
+            IoCManager.Register<IWhitelistDataService, WhitelistDataService>(); // ahahahahaha vibe coding be like:
+            IoCManager.Register<EuropaChatAnnihilator>();
         }
     }
 }

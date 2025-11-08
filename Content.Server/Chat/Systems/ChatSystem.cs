@@ -109,6 +109,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.Shared.Loudspeaker.Events; // goob - loudspeakers
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -140,6 +141,7 @@ using Content.Shared.Radio;
 using Content.Shared.Whitelist;
 using Content.Goobstation.Common.Chat;
 using Content.Goobstation.Common.Traits;
+using Content.Server._Europa.Chat;
 using Content.Server._Europa.TTS;
 using Content.Server.Radio;
 using Content.Shared._EinsteinEngines.Language.Systems;
@@ -187,6 +189,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly CollectiveMindUpdateSystem _collectiveMind = default!; // Goobstation - Starlight collective mind port
     [Dependency] private readonly LanguageSystem _language = default!; // Einstein Engines - Language
     [Dependency] private readonly TTSSystem _tts = default!;
+    [Dependency] private readonly EuropaChatAnnihilator _annihilator = default!;
 
     private const string DefaultAnnouncementSound = "/Audio/_Europa/Announcements/announce.ogg";
     private const string CentComAnnouncementSound = "/Audio/_Europa/Announcements/centcomm.ogg";
@@ -329,6 +332,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             _chatManager.EnsurePlayer(player.UserId).AddEntity(GetNetEntity(source));
         }
 
+        if (_annihilator.AnnihilateChudInIc(message, source))
+            return;
+
         if (desiredType == InGameICChatType.Speak && message.StartsWith(LocalPrefix))
         {
             checkRadioPrefix = false;
@@ -431,7 +437,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (player?.AttachedEntity is not { Valid: true } entity || source != entity)
             return;
 
-        message = SanitizeInGameOOCMessage(message);
+        message = SanitizeInGameOOCMessage(message, player);
 
         var sendType = type;
         if ((_adminManager.IsAdmin(player) && _adminManager.HasAdminFlag(player, AdminFlags.Moderator))
@@ -836,6 +842,9 @@ private string GetVoiceName(EntityUid source)
         if (message.Length == 0)
             return;
 
+        if (_annihilator.AnnihilateChudInIc(originalMessage, source))
+            return;
+
         GetSpeechVerb(source, message);
 
         string name;
@@ -924,8 +933,15 @@ private string GetVoiceName(EntityUid source)
         if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
             return;
 
-        var message = TransformSpeech(source, FormattedMessage.RemoveMarkupOrThrow(originalMessage), language); // Einstein Engines - Language
+        // Goob edit start
+        var message = FormattedMessage.RemoveMarkupOrThrow(originalMessage);
+        message = FormattedMessage.EscapeText(message);
+        message = TransformSpeech(source, message, language); // Einstein Engines - Language
+        // Goob edit end
         if (message.Length == 0)
+            return;
+
+        if (_annihilator.AnnihilateChudInIc(originalMessage, source))
             return;
 
         // get the entity's name by visual identity (if no override provided).
@@ -1144,7 +1160,9 @@ private string GetVoiceName(EntityUid source)
     // ReSharper disable once InconsistentNaming
     private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true)
     {
-        var newMessage = SanitizeMessageReplaceWords(message.Trim());
+        var trimmedMessage = message.Trim();
+
+        var newMessage = SanitizeMessageReplaceWords(trimmedMessage);
 
         newMessage = FuckHelper.SanitizeSimpleMessageForChat(newMessage);
 
@@ -1163,9 +1181,12 @@ private string GetVoiceName(EntityUid source)
         return prefix + newMessage;
     }
 
-    private string SanitizeInGameOOCMessage(string message)
+    private string SanitizeInGameOOCMessage(string message, ICommonSession? session)
     {
         var newMessage = message.Trim();
+        if (_annihilator.AnnihilateChudInOoc(newMessage, session))
+            return "У меня аутизм!";
+
         newMessage = FuckHelper.SanitizeSimpleMessageForChat(newMessage);
 
         return newMessage;
@@ -1276,12 +1297,34 @@ private string GetVoiceName(EntityUid source)
             ? Loc.GetString("chat-manager-language-prefix", ("language", language.ChatName))
             : "";
 
+        // goob start - loudspeakers
+
+        int? loudSpeakFont = null;
+
+        var getLoudspeakerEv = new GetLoudspeakerEvent();
+        RaiseLocalEvent(source, ref getLoudspeakerEv);
+
+        if (getLoudspeakerEv.Loudspeakers != null)
+            foreach (var loudspeaker in getLoudspeakerEv.Loudspeakers)
+            {
+                var loudSpeakerEv = new GetLoudspeakerDataEvent();
+                RaiseLocalEvent(loudspeaker, ref loudSpeakerEv);
+
+                if (loudSpeakerEv.IsActive && loudSpeakerEv.AffectChat)
+                {
+                    loudSpeakFont = loudSpeakerEv.FontSize;
+                    break;
+                }
+            }
+
+        // goob end
+
         return Loc.GetString(wrapId,
             ("color", color),
             ("entityName", entityName),
             ("verb", Loc.GetString(verbId)),
             ("fontType", language.SpeechOverride.FontId ?? speech.FontId),
-            ("fontSize", language.SpeechOverride.FontSize ?? speech.FontSize),
+            ("fontSize", loudSpeakFont ?? language.SpeechOverride.FontSize ?? speech.FontSize), // goob edit - "loudSpeakFont"
             ("boldFontType", language.SpeechOverride.BoldFontId ?? language.SpeechOverride.FontId ?? speech.FontId), // Goob Edit - Custom Bold Fonts
             ("message", message),
             ("language", languageDisplay));

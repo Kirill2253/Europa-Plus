@@ -32,7 +32,7 @@
 - type: customGhost
   id: OkTiFE-ghost
   ckey: OkTiFE
-  sprite: _Europa/Ghosts/no_mad.rsi
+  sprite: _Europa/Ghosts/OkTiFE.rsi
   alpha: 0.8
 
 # yourmommy
@@ -81,3 +81,17 @@
   ckey: trest100
   sprite: _Europa/Ghosts/trest100.rsi
   alpha: 0.8
+
+# dngcher
+- type: customGhost
+  id: dngcher-ghost
+  ckey: dngcher
+  sprite: _Europa/Ghosts/dngcher.rsi
+  alpha: 1
+
+# Vaciliy_Kotov
+- type: customGhost
+  id: VaciliyKotovGhost
+  ckey: Vaciliy_Kotov
+  sprite: _Europa/Ghosts/Vaciliy_Kotov.rsi
+  alpha: 1

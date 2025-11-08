@@ -89,6 +89,44 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: roleLoadout
+  id: JobCentralCommandOfficial
+  groups:
+  - GroupTankHarness
+  - Trinkets
+  - Animals
+  - GroupSpeciesBreathTool
+  - Survival
+  # Goobstation - EE Plasmeme Change.
+  - CentComOfficerEnvirohelm
+  - CentComOfficerEnvirosuit
+  - CentComOfficerEnvirogloves
+  # shit warning
+  - NanotrasenRepresentativeHead
+  - NanotrasenRepresentativeBackpack
+  - NanotrasenRepresentativeNeck
+  - NanotrasenRepresentativeShoes
+  - NanotrasenRepresentativeBelt
+
+- type: roleLoadout
+  id: JobInspector
+  groups:
+  - GroupTankHarness
+  - Trinkets
+  - Animals
+  - GroupSpeciesBreathTool
+  - Survival
+  # Goobstation - EE Plasmeme Change.
+  - CentComOfficerEnvirohelm
+  - CentComOfficerEnvirosuit
+  - CentComOfficerEnvirogloves
+  # shit warning
+  - NanotrasenRepresentativeHead
+  - NanotrasenRepresentativeBackpack
+  - NanotrasenRepresentativeNeck
+  - NanotrasenRepresentativeShoes
+  - NanotrasenRepresentativeBelt
+
+- type: roleLoadout
   id: JobNanotrasenRepresentative
   groups:
   - GroupTankHarness
@@ -157,6 +195,27 @@
   - GroupPocketTankDouble
 
 - type: roleLoadout
+  id: JobRoboticist
+  groups:
+  - GroupTankHarness
+  - ScientistHead
+  - ScientistNeck
+  - ScientistJumpsuit
+  - ScientistBackpack
+  - ScientistOuterClothing
+  - ScientistGloves
+  - ScientistShoes
+  - ScientistPDA
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  # Plasmaman
+  - ScientistEnvirohelm
+  - ScientistEnvirosuit
+  - ScientistEnvirogloves
+
+- type: roleLoadout
   id: JobBrigmedic
   groups:
   - BrigmedicHead
@@ -165,7 +224,7 @@
   - BrigmedicOuterClothing
   - MedicalGloves
   - BrigmedicBackpack
-  #- SecurityMelee # Brigmed probably doesn't need this roundstart
+  - SecurityMelee # EE parity, make corpsman able to carry weapons like the rest of security
   - SecurityShoes
   - SecurityNeck
   - SurvivalSecurity

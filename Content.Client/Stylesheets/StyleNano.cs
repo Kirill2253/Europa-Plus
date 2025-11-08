@@ -324,6 +324,7 @@ namespace Content.Client.Stylesheets
 
         // Europa-Start
         public static readonly Color ButtonColorCentralCommand = Color.FromHex("#0c344d");
+        public static readonly Color ButtonColorCentralCommandGreen = Color.FromHex("#3eb031");
         public static readonly Color ButtonColorCommand = Color.FromHex("#334E6D");
         public static readonly Color ButtonColorSecurity = Color.FromHex("#DE3A3A");
         public static readonly Color ButtonColorMedical = Color.FromHex("#52B4E9");
@@ -335,6 +336,10 @@ namespace Content.Client.Stylesheets
         public static readonly Color ButtonColorJustice = Color.FromHex("#8E3D3D");
         public static readonly Color ButtonColorSpecific = Color.FromHex("#969696");
         public static readonly Color ButtonColorAntagonist = Color.FromHex("#7F4141");
+
+        public static readonly Color ButtonColorBoostyNormal = Color.FromHex("#ff9f21");
+        public static readonly Color ButtonColorBoostyHovered = Color.FromHex("#ffac40");
+        public static readonly Color ButtonColorBoostyPressed = Color.FromHex("#bd7211");
         // Europa-End
 
         public override Stylesheet Stylesheet { get; }
@@ -1987,6 +1992,11 @@ namespace Content.Client.Stylesheets
                 Element<Button>().Class("ButtonColorCentralCommandDepartment").Pseudo(ContainerButton.StylePseudoClassNormal)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCentralCommand),
 
+                Element<Button>().Class("ButtonColorCentralCommandDepartmentGreen")
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCentralCommandGreen),
+                Element<Button>().Class("ButtonColorCentralCommandDepartmentGreen").Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCentralCommandGreen),
+
                 Element<Button>().Class("ButtonColorCommandDepartment")
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCommand),
                 Element<Button>().Class("ButtonColorCommandDepartment").Pseudo(ContainerButton.StylePseudoClassNormal)
@@ -2041,6 +2051,15 @@ namespace Content.Client.Stylesheets
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorAntagonist),
                 Element<Button>().Class("ButtonColorAntagonistDepartment").Pseudo(ContainerButton.StylePseudoClassNormal)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorAntagonist),
+
+                Element<Button>().Class("ButtonColorBoosty").Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorBoostyNormal),
+
+                Element<Button>().Class("ButtonColorBoosty").Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorBoostyHovered),
+
+                Element<Button>().Class("ButtonColorBoosty").Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorBoostyPressed),
                 // Europa-End
 
                 // Radial menu buttons
